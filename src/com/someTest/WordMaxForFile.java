@@ -1,6 +1,5 @@
 package com.someTest;
 
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.Reader;
@@ -25,8 +24,8 @@ public class WordMaxForFile {
 			while ((line = br.readLine()) != null) {
 				sb.append(line);
 				sb.append("\n");
-			} 
-			br.close(); 
+			}
+			br.close();
 			return sb.toString();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
