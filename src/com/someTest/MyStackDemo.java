@@ -8,6 +8,7 @@ public class MyStackDemo {
 		// 创建集合对象
 		MyStack ms = new MyStack();
 		// 添加元素
+		ms.add("hi");
 		ms.add("hello");
 		ms.add("world");
 		ms.add("java");

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-// 一个文件中,单词出现的最多次数.
+// 一个文件中,单词出现的最多次数
 public class WordMaxForFile {
 	// 读文件,并加载到字符串中
 	public static String loadFile(String path) {
