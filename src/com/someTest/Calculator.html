@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>计算器实现过程(范例)</title>
+		<style>
+			#sumid div{
+				width: 112px;
+				height: 76px;
+				float: left;
+				/*border: 1px solid red;*/
+				margin: 4px;
+				background-color: powderblue;
+				text-align: center;
+				line-height: 80px;
+				font-size: 24px;
+				border-radius: 10px;
+			}
+			
+			#sumid div:active{
+				background-color: red;
+			}
+		</style>
+		<script>
+			var opera="";
+			var tempNum="";
+			/**
+			 * 点击数字
+			 * @param {Object} number
+			 */
+			function clickNumber(number){
+				var isCanInput = judgeLength();
+				if (isCanInput){
+					if (tempNum!='0'){
+						document.getElementById("result").innerText+=number;
+						tempNum+=number;
+					} else {
+						delNumber();
+						document.getElementById("result").innerText+=number;
+						tempNum=number;
+					}
+				}
+			}
+			/**
+			 * 点击运算符
+			 * @param {Object} op
+			 */
+			function clickOpera(op){
+				var result2 = document.getElementById('result').innerText;
+				var endStr = result2.substr(result2.length-1,1);
+				if (("+-x÷%").indexOf(endStr)!=-1){
+					var newStr = result2.substring(0,result2.length-1)+op;
+					document.getElementById("result").innerText=newStr;
+					opera = op;
+				} else {
+					if(opera!=""){
+						result();
+						opera="";
+					}
+					var isCanInput = judgeLength();
+					if (isCanInput){
+						document.getElementById("result").innerText+=op;
+						opera=op;
+						tempNum="";
+					}
+				}
+			}
+			
+			function result(){
+				var result = document.getElementById('result').innerText;
+				if (result.indexOf("+")!=-1){
+					var arrNumber = result.split("+");
+					var sum = Number(arrNumber[0])+Number(arrNumber[1]);
+					document.getElementById("result").innerText=sum;
+				} else if (result.indexOf("-")!=-1){
+					var arrNumber = result.split("-");
+					var sum = Number(arrNumber[0])-Number(arrNumber[1]);
+					document.getElementById("result").innerText=sum;
+				} else if (result.indexOf("x")!=-1){
+					var arrNumber = result.split("x");
+					var sum = Number(arrNumber[0])*Number(arrNumber[1]);
+					document.getElementById("result").innerText=sum;
+				} else if (result.indexOf("÷")!=-1){
+					var arrNumber = result.split("÷");
+					var sum = Number(arrNumber[0])/Number(arrNumber[1]);
+					document.getElementById("result").innerText=sum;
+				} else if (result.indexOf("%")!=-1){
+					var arrNumber = result.split("%");
+					var sum = Number(arrNumber[0])%Number(arrNumber[1]);
+					document.getElementById("result").innerText=sum;
+				}
+			}
+			
+			/**
+			 * 清除显示栏
+			 */
+			function clearAll(){
+				document.getElementById("result").innerText="0";
+				tempNum="0";
+			}
+			/**
+			 * 取反
+			 */
+			function plus(){
+				var isCanInput = judgeLength();
+				if (isCanInput){
+					var result = document.getElementById("result").innerText;
+					if (result.substr(0,1)=='-'){
+						document.getElementById("result").innerText = result.substring(1,result.length);
+					} else {
+						document.getElementById("result").innerText = "-" + result;
+					}
+				}
+			}
+			
+			/**
+			 * 回退
+			 */
+			function delNumber(){
+				tempNum = tempNum.substring(0,tempNum.length-1);
+				var result = document.getElementById("result").innerText;
+				//获取当前最后一位字符
+				var endStr = result.substr((result.length-1),1);
+				//更新暂停区
+				if (("+-x÷%").indexOf(endStr)!=-1){
+					var newResult = result.substring(0,result.length-1);
+					tempNum = newResult;
+				}
+				//删除最后一位
+				var newResult = result.substring(0,result.length-1);
+				document.getElementById("result").innerText=newResult;
+			}
+			
+			/**
+			 * 动态监测显示框长度
+			 */
+			function judgeLength(){
+				var isCanInput = true;
+				var result = document.getElementById("result").innerText;
+				if (result.length>=16){
+					isCanInput = false;
+					alert("长度超出范围！");
+				}
+				return isCanInput;
+			}
+		</script>
+	</head>
+	<body>
+		<div style="width: 480px;height: 550px;background-color: darkslategrey;margin: 0 auto;border-radius: 10px;">
+			<div style="height: 60px;">
+				<font size="6px" color="red">●</font>
+				<font size="6px" color="blue">●</font>
+				<font size="6px" color="green">●</font>
+			</div>
+			<div style="height: 70px;">
+				<div style="width: 98%;height:100%;border: 1px solid red;margin-left: 1%;background-color: white;">
+					<font id="result" style="font-size: 50px;float: right;"></font>
+				</div>
+			</div>
+			<div id="sumid">
+				<div onclick="clearAll();">AC</div>
+				<div onclick="plus();">+/-</div>
+				<div onclick="clickOpera('%')">%</div>
+				<div onclick="clickOpera('÷')">÷</div>
+				<div onclick="clickNumber('7');">7</div>
+				<div onclick="clickNumber('8');">8</div>
+				<div onclick="clickNumber('9');">9</div>
+				<div onclick="clickOpera('x')">x</div>
+				<div onclick="clickNumber('4');">4</div>
+				<div onclick="clickNumber('5');">5</div>
+				<div onclick="clickNumber('6');">6</div>
+				<div onclick="clickOpera('-')">-</div>
+				<div onclick="clickNumber('1');">1</div>
+				<div onclick="clickNumber('2');">2</div>
+				<div onclick="clickNumber('3');">3</div>
+				<div onclick="clickOpera('+')">+</div>
+				<div onclick="clickNumber('0');">0</div>
+				<div onclick="delNumber();">回退</div>
+				<div onclick="clickNumber('.');">.</div>
+				<div onclick="result();">=</div>
+			</div>
+		</div>
+	</body>
+</html>
