@@ -14,7 +14,7 @@ public class MyStackDemo {
 		ms.add("java");
 		while (!ms.isEmpty()) {
 			System.out.println(ms.get());
-		}
+		} 
 	}
 }
 
